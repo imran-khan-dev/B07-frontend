@@ -1,6 +1,7 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ExternalLink } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from "react";
+import { Menu, X, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,8 +12,8 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close menu when screen size changes
@@ -22,33 +23,39 @@ const Navbar = () => {
         setIsMenuOpen(false);
       }
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const navLinks = [
-    { href: "#work", text: "Project" },
-    { href: "#about", text: "About" },
-    { href: "#blog", text: "Blog" },
-    { href: "#contact", text: "Contact" },
+    { href: "projects", text: "Project" },
+    { href: "about", text: "About" },
+    { href: "blogs", text: "Blog" },
+    { href: "contact", text: "Contact" },
   ];
 
   return (
-    <header className={`w-full transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-lg' 
-        : 'bg-white/90 dark:bg-gray-900/80 backdrop-blur-md'
-    } border-b border-gray-200 dark:border-gray-800`}>
+    <header
+      className={`w-full transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-lg"
+          : "bg-white/90 dark:bg-gray-900/80 backdrop-blur-md"
+      } border-b border-gray-200 dark:border-gray-800`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 max-w-7xl">
         <div className="flex h-14 sm:h-16 lg:h-20 items-center justify-between">
           {/* Logo and Name */}
           <div className="flex items-center">
-            <a href="#" className="flex items-center space-x-2 group">
+            <Link href="/" className="flex items-center space-x-2 group">
               <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-gray-900 dark:bg-gray-50 rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
-                <span className="text-white dark:text-gray-900 font-bold text-base sm:text-lg lg:text-xl">S</span>
+                <span className="text-white dark:text-gray-900 font-bold text-base sm:text-lg lg:text-xl">
+                  I
+                </span>
               </div>
-              <span className="font-bold text-lg sm:text-xl lg:text-2xl text-gray-900 dark:text-gray-100">Sera UI</span>
-            </a>
+              <span className="font-bold text-lg sm:text-xl lg:text-2xl text-gray-900 dark:text-gray-100">
+                Imran Khan
+              </span>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -85,14 +92,20 @@ const Navbar = () => {
             className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
+            {isMenuOpen ? (
+              <X className="h-5 w-5 sm:h-6 sm:w-6" />
+            ) : (
+              <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+            )}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
           <div className="py-4 border-t border-gray-200 dark:border-gray-800">
             <div className="flex flex-col space-y-1">
               {navLinks.map((link) => (
@@ -106,8 +119,8 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="pt-4 mt-2 border-t border-gray-200 dark:border-gray-700 flex flex-col space-y-2">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="flex items-center justify-center space-x-2 px-3 py-2.5 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <span>Resume</span>
