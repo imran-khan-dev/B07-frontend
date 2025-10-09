@@ -1,5 +1,6 @@
 import { BlogPost } from "@/types";
 import Image from "next/image";
+import { format } from "date-fns";
 
 export default function BlogDetailsCard({ blog }: { blog: BlogPost | null }) {
   if (!blog) {
@@ -51,7 +52,7 @@ export default function BlogDetailsCard({ blog }: { blog: BlogPost | null }) {
                 {blog.author.name}
               </p>
               <p className="text-gray-500 dark:text-gray-400 text-sm">
-                {new Date(blog.createdAt).toLocaleDateString()} • {blog.views}{" "}
+                <span>{format(blog.createdAt, "PPP")}</span> • {blog.views}{" "}
                 views
               </p>
             </div>
