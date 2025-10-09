@@ -4,7 +4,14 @@ import Hero from "@/components/modules/Home/Hero";
 import { BlogPost } from "@/types";
 
 export default async function HomePage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`,
+    {
+      next: {
+        revalidate: 30,
+      },
+    }
+  );
   const { data } = await res.json();
   const blogs: BlogPost[] = data.data;
   return (

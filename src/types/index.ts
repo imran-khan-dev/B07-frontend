@@ -1,8 +1,12 @@
 
 export interface Author {
+    id: number;
     name: string;
-    picture?: string;
-    isVerified?: boolean;
+    email: string;
+    picture?: string | null;
+    role: "ADMIN";
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface BlogPost {
@@ -11,7 +15,7 @@ export interface BlogPost {
     summary?: string;
     content: string;
     thumbnail?: string;
-    tags?: string[];
+    tags: string[];
     author: Author;
     views?: number;
     createdAt: Date;

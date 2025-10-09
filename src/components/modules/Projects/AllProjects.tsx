@@ -64,7 +64,7 @@ const AllProjects = ({
   ],
 }: ProjectProps) => {
   return (
-    <section className="relative overflow-hidden py-20 mx-auto">
+    <section className="relative overflow-hidden py-18 mx-auto">
       {/* Background gradient (top ↔ bottom, center soft white/black) */}
       <div
         className="absolute inset-0 z-0 dark:hidden"

@@ -142,7 +142,7 @@ function Footer() {
         </div>
 
         <p className="text-center text-xs text-gray-500 dark:text-gray-500 mt-4">
-          &copy; {new Date().getFullYear()} © Imran Khan.{" "}
+          &copy; {new Date().getFullYear()} Imran Khan.{" "}
           {
             <a
               href={"/dashboard"}

@@ -28,6 +28,7 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
+    { href: "/", text: "Home" },
     { href: "projects", text: "Project" },
     { href: "about", text: "About" },
     { href: "blogs", text: "Blog" },
