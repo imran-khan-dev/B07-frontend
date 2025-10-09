@@ -1,82 +1,84 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Link from "next/link";
-import Image from "next/image";
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// "use client";
 
-export default function BlogCard({ post }: { post: any }) {
-  return (
-    <Link
-      href={`/blogs/${post.id}`}
-      className="block group transform hover:-translate-y-1 transition-transform duration-300"
-    >
-      <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-        {post.thumbnail ? (
-          <div className="relative h-56 w-full overflow-hidden">
-            <Image
-              src={post.thumbnail}
-              alt={post.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        ) : (
-          <div className="h-56 w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-300">
-            No Image
-          </div>
-        )}
+// import Link from "next/link";
+// import Image from "next/image";
+// import { ArrowRight } from "lucide-react";
+// import { Card } from "@/components/ui/card";
+// import { BlogPost } from "@/types";
 
-        <div className="p-6">
-          <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
-            {post.title}
-          </h3>
+// export default function BlogCard({ post }: { post: BlogPost }) {
+//   return (
+//     <div className="grid gap-y-10 sm:grid-cols-12 mx-3 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
+//       <Card
+//         key={post.id}
+//         className="order-last border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-black/30 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2 rounded-2xl p-6 sm:p-8"
+//       >
+//         <div className="grid gap-y-6 sm:grid-cols-10 sm:gap-x-5 md:items-center md:gap-x-8 lg:gap-x-12">
+//           {/* Text Section */}
+//           <div className="sm:col-span-5 pl-2 md:pl-4 lg:pl-6">
+//             <div className="mb-4 md:mb-6">
+//               <div className="flex flex-wrap gap-3 text-xs tracking-wider text-gray-500 dark:text-gray-400 uppercase md:gap-5 lg:gap-6">
+//                 {post.tags?.map((tag: any) => (
+//                   <span
+//                     key={tag}
+//                     className="px-2 py-1 rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 text-blue-600 dark:text-purple-400 border border-blue-500/20 dark:border-purple-400/20"
+//                   >
+//                     {tag}
+//                   </span>
+//                 ))}
+//               </div>
+//             </div>
 
-          <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3">
-            {post.content}
-          </p>
+//             <h3 className="text-xl font-semibold text-gray-900 dark:text-white md:text-2xl lg:text-3xl">
+//               <a
+//                 href={`/blogs/${post.id}`}
+//                 target="_blank"
+//                 className="hover:text-blue-600 dark:hover:text-purple-400 transition-colors"
+//               >
+//                 {post.title}
+//               </a>
+//             </h3>
 
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Image
-                src={
-                  post.author.picture ||
-                  "https://cdn-icons-png.flaticon.com/512/9385/9385289.png"
-                }
-                alt={post.author.name}
-                width={36}
-                height={36}
-                className="rounded-full border-2 border-gray-200 dark:border-gray-700"
-              />
-              <span className="text-gray-600 dark:text-gray-300 text-sm flex items-center gap-1">
-                {post.author.name}
-                {post.author.isVerified && (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-blue-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                )}
-              </span>
-            </div>
-            <span className="text-gray-500 dark:text-gray-400 text-sm">
-              {post.views} views
-            </span>
-          </div>
+//             <p className="mt-4 text-gray-600 dark:text-gray-300 md:mt-5">
+//               {post.description}
+//             </p>
 
-          <div className="text-right">
-            <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm hover:underline">
-              Read More →
-            </span>
-          </div>
-        </div>
-      </div>
-    </Link>
-  );
-}
+//             <div className="mt-6 flex items-center space-x-4 text-sm md:mt-8 text-gray-500 dark:text-gray-400">
+//               {/* <span>{post.author}</span> */}
+//               <span>•</span>
+//               {/* <span>{post.published}</span> */}
+//             </div>
+
+//             <div className="mt-6 flex items-center space-x-2 md:mt-8">
+//               <a
+//                 href={`/blogs/${post.id}`}
+//                 target="_blank"
+//                 className="inline-flex items-center font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:underline md:text-base"
+//               >
+//                 <span>Read more</span>
+//                 <ArrowRight className="ml-2 size-4 text-blue-600 dark:text-purple-400 transition-transform group-hover:translate-x-1" />
+//               </a>
+//             </div>
+//           </div>
+
+//           {/* Image Section */}
+//           <div className="order-first sm:order-last sm:col-span-5">
+//             <a href={`/blogs/${post.id}`} target="_blank" className="block">
+//               <div className="aspect-16/9 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+//                 <img
+//                   src={
+//                     post.thumbnail ||
+//                     "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg"
+//                   }
+//                   alt={post.title}
+//                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+//                 />
+//               </div>
+//             </a>
+//           </div>
+//         </div>
+//       </Card>
+//     </div>
+//   );
+// }

@@ -1,9 +1,13 @@
 import { AllBlogs } from "@/components/modules/Blogs/AllBlogs";
+import { BlogPost } from "@/types";
 
-const AllBlogsPage = () => {
+const AllBlogsPage = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`);
+  const { data } = await res.json();
+  const blogs: BlogPost[] = data.data;
   return (
     <div>
-      <AllBlogs />
+      <AllBlogs blogs={blogs} />
     </div>
   );
 };
