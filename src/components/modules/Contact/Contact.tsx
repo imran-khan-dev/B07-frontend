@@ -44,14 +44,14 @@ const ContactPage = () => {
               className="inline-flex items-center gap-3 text-lg font-medium text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-purple-400 transition-colors"
             >
               <Mail className="w-5 h-5 text-blue-600 dark:text-purple-400" />
-              example@gmail.com
+              emranniloy84@gmail.com
             </a>
 
             {/* Social Links */}
             <div className="flex items-center justify-center space-x-10">
               {/* LinkedIn */}
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://www.linkedin.com/in/imran-khan-438213358/"
                 target="_blank"
                 className="text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-purple-400 transition-transform transform hover:scale-110"
               >
@@ -60,7 +60,7 @@ const ContactPage = () => {
 
               {/* WhatsApp (Custom SVG Icon) */}
               <a
-                href="https://wa.me/8801234567890"
+                href="https://wa.me/qr/LO5XH64VEK4LE1"
                 target="_blank"
                 className="text-gray-800 dark:text-gray-100 hover:text-green-500 transition-transform transform hover:scale-110"
                 aria-label="WhatsApp"

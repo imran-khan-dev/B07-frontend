@@ -128,8 +128,8 @@ const AllProjects = ({
                     <span>
                       {new Date(project.createdAt).toLocaleDateString()}
                     </span>
-                    <span>•</span>
-                    <span>{project.views} views</span>
+                    {/* <span>•</span> */}
+                    {/* <span>{project.views} views</span> */}
                   </div>
 
                   <div className="mt-6 flex items-center gap-4 md:mt-8">

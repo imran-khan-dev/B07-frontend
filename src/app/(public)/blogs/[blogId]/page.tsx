@@ -14,8 +14,24 @@ export const generateStaticParams = async () => {
   }));
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { blogId: string };
+}) => {
+  const { blogId } = await params;
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/${blogId}`);
+
+  const { data: blog } = await res.json();
+  return {
+    title: blog?.title,
+    description: blog?.summary,
+  };
+};
+
 const BlogDetailsPage = async ({ params }: { params: { blogId: string } }) => {
-  const { blogId } = params;
+  const { blogId } = await params;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API}/blog/${blogId}`,

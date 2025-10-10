@@ -75,16 +75,19 @@ const Navbar = () => {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
-            <a
-              href="#"
+            <Link
+              href="resume"
               className="flex items-center space-x-1.5 lg:space-x-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:shadow-md"
             >
               <span>Resume</span>
               <ExternalLink className="h-3 w-3 lg:h-4 lg:w-4" />
-            </a>
-            <button className="px-4 lg:px-6 py-1.5 lg:py-2 text-xs lg:text-sm font-medium bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-all shadow-sm hover:shadow-lg transform hover:scale-105">
+            </Link>
+            <Link
+              href={"contact"}
+              className="cursor-pointer px-4 lg:px-6 py-1.5 lg:py-2 text-xs lg:text-sm font-medium bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-all shadow-sm hover:shadow-lg transform hover:scale-105"
+            >
               Hire Me
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -127,9 +130,12 @@ const Navbar = () => {
                   <span>Resume</span>
                   <ExternalLink className="h-4 w-4" />
                 </a>
-                <button className="px-3 py-2.5 text-sm font-medium bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
+                <Link
+                  href={"contact"}
+                  className="cursor-pointer px-3 py-2.5 text-sm font-medium bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+                >
                   Hire Me
-                </button>
+                </Link>
               </div>
             </div>
           </div>

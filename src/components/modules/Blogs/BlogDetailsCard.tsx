@@ -52,8 +52,7 @@ export default function BlogDetailsCard({ blog }: { blog: BlogPost | null }) {
                 {blog.author.name}
               </p>
               <p className="text-gray-500 dark:text-gray-400 text-sm">
-                <span>{format(blog.createdAt, "PPP")}</span> • {blog.views}{" "}
-                views
+                <span>{format(blog.createdAt, "PPP")}</span>
               </p>
             </div>
           </div>
