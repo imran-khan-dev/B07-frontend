@@ -1,7 +1,12 @@
 // src/app/resume/page.tsx
-"use client";
 import { Download, Mail, MapPin, Phone } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Resume | Imran Khan",
+  description: "Resume of Imran Khan",
+};
 
 export default function ResumePage() {
   return (
@@ -11,10 +16,10 @@ export default function ResumePage() {
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-10">
           <div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-              Your Name
+              Imran Khan
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              MERN Stack Developer | React | TypeScript | Node.js
+              Full Stack Developer | Next.js | React.js | TypeScript | Node.js
             </p>
 
             {/* Contact Info */}
@@ -23,20 +28,20 @@ export default function ResumePage() {
                 href="mailto:yourmail@gmail.com"
                 className="flex items-center gap-2 hover:text-blue-600"
               >
-                <Mail size={16} /> yourmail@gmail.com
+                <Mail size={16} /> emranniloy84@gmail.com
               </Link>
-              <span className="flex items-center gap-2">
+              {/* <span className="flex items-center gap-2">
                 <Phone size={16} /> +8801XXXXXXXXX
-              </span>
+              </span> */}
               <span className="flex items-center gap-2">
                 <MapPin size={16} /> Dhaka, Bangladesh
               </span>
             </div>
           </div>
 
-          <button className="mt-6 sm:mt-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg transition-all">
+          {/* <button className="mt-6 sm:mt-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg transition-all">
             <Download size={18} /> Download PDF
-          </button>
+          </button> */}
         </header>
 
         <hr className="border-gray-200 dark:border-gray-800 my-8" />
@@ -47,10 +52,10 @@ export default function ResumePage() {
             Summary
           </h2>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            I am a passionate MERN Stack Developer who loves building scalable,
-            user-friendly web applications with modern technologies like React,
-            TypeScript, and Node.js. I focus on writing clean, maintainable code
-            following best practices and design principles.
+            I am a passionate Full Stack Developer who loves building scalable,
+            user-friendly web applications with modern technologies like Next
+            JS, React, TypeScript, and Node.js etc. I focus on writing clean,
+            maintainable code following best practices and design principles.
           </p>
         </section>
 
@@ -86,7 +91,7 @@ export default function ResumePage() {
         </section>
 
         {/* Experience */}
-        <section className="mb-10">
+        {/* <section className="mb-10">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
             Experience
           </h2>
@@ -108,7 +113,7 @@ export default function ResumePage() {
               </ul>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Projects */}
         <section className="mb-10">
@@ -124,10 +129,6 @@ export default function ResumePage() {
               <strong>Turf Management SaaS</strong> — Online turf booking and
               management system with OTP verification and payment tracking.
             </li>
-            <li>
-              <strong>Library Management API</strong> — Express + MongoDB API
-              with borrow logic, aggregation summaries, and clean architecture.
-            </li>
           </ul>
         </section>
 
@@ -138,10 +139,16 @@ export default function ResumePage() {
           </h2>
           <div>
             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-              Bachelor of Business Administration (BBA)
+              Next Level Web development
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Ongoing</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+              Masters of Business Administration (MBA)
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Major in Management | Ongoing
+              Major in Marketing | Ongoing
             </p>
           </div>
         </section>
