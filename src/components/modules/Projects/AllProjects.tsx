@@ -2,67 +2,9 @@
 
 import { ArrowRight, Github } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Project, ProjectsProps } from "@/types";
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail?: string;
-  liveUrl?: string;
-  repoUrl?: string;
-  features?: string[];
-  views: number;
-  createdAt: string;
-}
-
-interface ProjectProps {
-  heading?: string;
-  description?: string;
-  projects?: Project[];
-}
-
-const AllProjects = ({
-  heading = "All Projects",
-  description = "Explore my latest web development projects built with modern technologies like React, Next.js, TypeScript, and Tailwind CSS.",
-  projects = [
-    {
-      id: 1,
-      title: "Turf Management SaaS",
-      description:
-        "A full-featured turf booking and management system with role-based dashboards, manual and online bookings, subscription plans, and SSLCommerz integration.",
-      thumbnail:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
-      liveUrl: "https://example.com/turf",
-      repoUrl: "https://github.com/example/turf-management",
-      features: [
-        "JWT authentication with OTP verification",
-        "Role-based dashboards (Admin, Owner, User)",
-        "Manual and online booking support",
-        "Subscription and payment tracking",
-      ],
-      views: 1032,
-      createdAt: "2024-02-15",
-    },
-    {
-      id: 2,
-      title: "Library Management System",
-      description:
-        "A clean MERN-based library app allowing users to manage books, borrow records, and generate summary reports with role-based access control.",
-      thumbnail:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
-      liveUrl: "https://example.com/library",
-      repoUrl: "https://github.com/example/library-system",
-      features: [
-        "Book CRUD operations",
-        "Borrow summary aggregation",
-        "Pagination and search filters",
-        "Responsive, modern UI",
-      ],
-      views: 789,
-      createdAt: "2024-03-10",
-    },
-  ],
-}: ProjectProps) => {
+const AllProjects = ({projects}: ProjectsProps) => {
   return (
     <section className="relative overflow-hidden py-18 mx-auto">
       {/* Background gradient (top ↔ bottom, center soft white/black) */}
@@ -85,16 +27,17 @@ const AllProjects = ({
         {/* Header */}
         <div className="text-center px-6 sm:px-10">
           <h1 className="mx-auto mb-6 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl lg:max-w-3xl">
-            {heading}
+            All Projects
           </h1>
           <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-300 md:text-lg">
-            {description}
+            Explore my latest web development projects built with modern
+            technologies like React, Next.js, TypeScript, and Tailwind CSS.
           </p>
         </div>
 
         {/* Project Cards */}
         <div className="grid gap-y-10 sm:grid-cols-12 mx-3 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
-          {projects.map((project) => (
+          {projects.map((project: Project) => (
             <Card
               key={project.id}
               className="order-last border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-black/30 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2 rounded-2xl p-6 sm:p-8"

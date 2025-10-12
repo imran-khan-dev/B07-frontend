@@ -29,10 +29,10 @@ const Navbar = () => {
 
   const navLinks = [
     { href: "/", text: "Home" },
-    { href: "projects", text: "Project" },
-    { href: "about", text: "About" },
-    { href: "blogs", text: "Blog" },
-    { href: "contact", text: "Contact" },
+    { href: "/projects", text: "Project" },
+    { href: "/about", text: "About" },
+    { href: "/blogs", text: "Blog" },
+    { href: "/contact", text: "Contact" },
   ];
 
   return (
@@ -131,7 +131,7 @@ const Navbar = () => {
                   <ExternalLink className="h-4 w-4" />
                 </a>
                 <Link
-                  href={"contact"}
+                  href={"/contact"}
                   className="cursor-pointer px-3 py-2.5 text-sm font-medium bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
                 >
                   Hire Me
