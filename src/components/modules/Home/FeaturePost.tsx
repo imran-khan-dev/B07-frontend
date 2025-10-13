@@ -5,6 +5,12 @@ import { BlogPost } from "@/types";
 import { format } from "date-fns";
 
 export default function FeaturePost({ blogs }: { blogs: BlogPost[] }) {
+  // Filter featured posts and limit to 3
+  const featuredPosts = blogs.filter((post) => post.isFeatured).slice(0, 3);
+
+  // If no featured posts, don't render section
+  if (featuredPosts.length === 0) return null;
+
   return (
     <section className="mx-auto pb-18 relative overflow-hidden">
       <div className="mx-auto container relative z-10 flex flex-col items-center gap-16">
@@ -19,7 +25,7 @@ export default function FeaturePost({ blogs }: { blogs: BlogPost[] }) {
         </div>
 
         <div className="grid gap-y-10 sm:grid-cols-12 mx-3 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
-          {blogs.slice(0, 3).map((post) => (
+          {featuredPosts.map((post) => (
             <Card
               key={post.id}
               className="order-last border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-black/30 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2 rounded-2xl p-6 sm:p-8"

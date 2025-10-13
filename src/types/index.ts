@@ -42,7 +42,7 @@ export interface Project {
   liveUrl?: string | null;
   repoUrl?: string | null;
   features: string[];
-  views: number;
+  views?: number;
   createdAt: string;
   updatedAt: string;
   owner: Owner;
