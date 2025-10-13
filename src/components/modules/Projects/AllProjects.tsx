@@ -1,5 +1,3 @@
-"use client";
-
 import { ArrowRight, Github } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Project, ProjectsProps } from "@/types";

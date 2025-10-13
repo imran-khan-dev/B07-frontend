@@ -14,6 +14,7 @@ export interface BlogPost {
   title: string;
   summary?: string | null;
   content: string;
+  isFeatured: string
   thumbnail?: string | null;
   tags: string[];
   author: Author;

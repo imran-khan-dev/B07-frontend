@@ -1,5 +1,3 @@
-"use client";
-
 import { Linkedin, Mail } from "lucide-react";
 import { Card } from "@/components/ui/card";
 

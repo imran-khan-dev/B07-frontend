@@ -1,6 +1,3 @@
-"use client";
-import React from "react";
-
 // Self-contained SVG icon for the "Welcome" badge
 const DotIcon = () => (
   <svg

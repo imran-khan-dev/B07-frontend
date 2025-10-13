@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-
 import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { BlogPost } from "@/types";
