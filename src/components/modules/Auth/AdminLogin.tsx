@@ -19,6 +19,7 @@ import { Card } from "@/components/ui/card";
 import { toast } from "react-hot-toast";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import { login } from "@/actions/login";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Enter a valid email address." }),
@@ -30,6 +31,7 @@ const loginSchema = z.object({
 export default function AdminLoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -44,21 +46,11 @@ export default function AdminLoginForm() {
 
     try {
       const res = await login(data);
-      // const res = await fetch(
-      //   `${process.env.NEXT_PUBLIC_BASE_API}/auth/login`,
-      //   {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify(data),
-      //   }
-      // );
-
-      // const result = await res.json();
 
       if (!res) throw new Error("Login failed");
 
       toast.success("Login successful!");
-      // You can redirect or store token here
+      router.push("/dashboard");
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
     } finally {

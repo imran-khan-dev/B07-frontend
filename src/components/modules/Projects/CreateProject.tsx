@@ -106,7 +106,7 @@ export function CreateProjectForm() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* Title */}
+              {/* Project Title */}
               <FormField
                 control={form.control}
                 name="title"
@@ -130,7 +130,7 @@ export function CreateProjectForm() {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Summary</FormLabel>
+                    <FormLabel>Description</FormLabel>
                     <FormControl>
                       <MDEditor
                         value={field.value || ""}
@@ -170,13 +170,13 @@ export function CreateProjectForm() {
                 )}
               />
 
-              {/* Live Url */}
+              {/* Live URL */}
               <FormField
                 control={form.control}
                 name="liveUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Project Live URL</FormLabel>
+                    <FormLabel>Live Project URL</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter live URL..." {...field} />
                     </FormControl>
@@ -188,13 +188,13 @@ export function CreateProjectForm() {
                 )}
               />
 
-              {/* Repo Url */}
+              {/* Repository URL */}
               <FormField
                 control={form.control}
                 name="repoUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Project Repo URL</FormLabel>
+                    <FormLabel>Repository URL</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter repository URL..." {...field} />
                     </FormControl>
@@ -215,7 +215,7 @@ export function CreateProjectForm() {
                     <FormLabel>Features (comma separated)</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="react, typescript, ui"
+                        placeholder="react, typescript, tailwind"
                         value={field.value.join(", ")}
                         onChange={(e) =>
                           field.onChange(
@@ -232,6 +232,7 @@ export function CreateProjectForm() {
                 )}
               />
 
+              {/* Submit Button */}
               <div className="pt-4 text-center">
                 <Button
                   type="submit"
