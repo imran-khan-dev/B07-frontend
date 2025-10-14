@@ -25,6 +25,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import { toast } from "react-hot-toast";
+import { useState } from "react";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -65,6 +66,8 @@ export function UpdateBlogModal({
   blog,
   onUpdated,
 }: UpdateBlogModalProps) {
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,6 +81,7 @@ export function UpdateBlogModal({
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsUpdating(true);
     try {
       const formData = new FormData();
       formData.append("title", data.title);
@@ -87,13 +91,10 @@ export function UpdateBlogModal({
       formData.append("isFeatured", String(data.isFeatured));
       formData.append("tags", JSON.stringify(data.tags));
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/blog/update-blog/${blog.id}`,
-        {
-          method: "PATCH",
-          body: formData,
-        }
-      );
+      const res = await fetch(`/api/proxy/blog/update-blog/${blog.id}`, {
+        method: "PATCH",
+        body: formData,
+      });
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -107,6 +108,8 @@ export function UpdateBlogModal({
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Something went wrong");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -253,9 +256,10 @@ export function UpdateBlogModal({
               <div className="pt-4 text-center">
                 <Button
                   type="submit"
+                  disabled={isUpdating}
                   className="px-8 py-2.5 font-semibold text-sm rounded-md bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 transition-all"
                 >
-                  Save Changes
+                  {isUpdating ? "Updating..." : "Update"}
                 </Button>
               </div>
             </form>

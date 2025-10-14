@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { toast } from "react-hot-toast";
 import { Eye, EyeOff, LogIn } from "lucide-react";
+import { login } from "@/actions/login";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Enter a valid email address." }),
@@ -40,22 +41,23 @@ export default function AdminLoginForm() {
 
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
+
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
+      const res = await login(data);
+      // const res = await fetch(
+      //   `${process.env.NEXT_PUBLIC_BASE_API}/auth/login`,
+      //   {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify(data),
+      //   }
+      // );
 
-      const result = await res.json();
+      // const result = await res.json();
 
-      if (!res.ok) throw new Error(result?.message || "Login failed");
+      if (!res) throw new Error("Login failed");
 
       toast.success("Login successful!");
-      console.log("User:", result);
       // You can redirect or store token here
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");

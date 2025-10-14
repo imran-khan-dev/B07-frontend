@@ -74,13 +74,10 @@ export function CreateProjectForm() {
       formData.append("features", JSON.stringify(data.features));
       formData.append("ownerId", "1");
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/project/create-project`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const res = await fetch(`/api/proxy/project/create-project`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));

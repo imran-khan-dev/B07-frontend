@@ -38,10 +38,9 @@ export default function DashboardProjects({
     setIsDeleteModalOpen(false);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/project/delete/${deleteProjectId}`,
-        { method: "DELETE" }
-      );
+      const res = await fetch(`/api/proxy/project/delete/${deleteProjectId}`, {
+        method: "DELETE",
+      });
 
       if (!res.ok) throw new Error("Failed to delete project");
 
@@ -92,8 +91,11 @@ export default function DashboardProjects({
 
                 {/* Metadata */}
                 <p className="text-gray-500 dark:text-gray-400 text-xs mt-2">
-                  Owner: {project.owner?.name || "Unknown"} •{" "}
-                  {new Date(project.createdAt).toLocaleDateString()} •{" "}
+                  By{" "}
+                  {typeof project.owner === "object"
+                    ? project.owner.name
+                    : project.owner || "Unknown"}{" "}
+                  • {new Date(project.createdAt).toLocaleDateString()} •{" "}
                   {project.views ?? 0} views
                 </p>
               </div>

@@ -36,10 +36,9 @@ export default function DashboardBlogs({ allblogs }: DashboardBlogsProps) {
     setIsDeleteModalOpen(false);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/blog/delete/${deleteBlogId}`,
-        { method: "DELETE" }
-      );
+      const res = await fetch(`/api/proxy/blog/delete/${deleteBlogId}`, {
+        method: "DELETE",
+      });
 
       if (!res.ok) throw new Error("Failed to delete blog");
 

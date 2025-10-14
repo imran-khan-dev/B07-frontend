@@ -1,43 +1,39 @@
-/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-
-export async function GET(req: Request, { params }: { params: { path: string[] } }) {
-    const token = (await cookies()).get("token")?.value;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
-    const url = `${baseUrl}/${params.path.join("/")}`;
-
-    const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-        cache: "no-store",
-    });
-
-    const data = await res.json();
-    return NextResponse.json(data, { status: res.status });
-}
-
-export async function POST(req: Request, context: { params: Promise<{ path: string[] }> }) {
+async function handleProxy(req: Request, context: { params: Promise<{ path: string[] }> }) {
     const { params } = await context;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
     const url = `${baseUrl}/${(await params).path.join("/")}`;
 
-   
-    const token = (await cookies()).get("token")?.value;
+    const accessToken = (await cookies()).get("accessToken")?.value;
 
+    console.log("here is AT", accessToken)
 
     const headers = new Headers(req.headers);
-    if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+    if (accessToken) headers.set("Authorization", accessToken);
+
+    console.log(headers)
+
+    const method = req.method.toUpperCase();
+    const fetchOptions: any = { method, headers };
+
+    // Just POST and PATCH need a body
+    if (["POST", "PATCH"].includes(method)) {
+        const contentType = req.headers.get("content-type") || "";
+        if (contentType.includes("application/json")) {
+            const json = await req.json();
+            fetchOptions.body = JSON.stringify(json);
+            headers.set("Content-Type", "application/json");
+        } else {
+            // FormData as raw stream forward to backend
+            fetchOptions.body = req.body;
+            fetchOptions.duplex = "half";
+        }
     }
 
-    const res = await fetch(url, {
-        method: req.method,
-        headers,  
-        body: req.body,   
-        duplex: "half",   
-    } as any);
+    const res = await fetch(url, fetchOptions);
 
     let data;
     try {
@@ -47,4 +43,21 @@ export async function POST(req: Request, context: { params: Promise<{ path: stri
     }
 
     return NextResponse.json(data, { status: res.status });
+}
+
+
+export async function GET(req: Request, context: { params: { path: string[] } }) {
+    return handleProxy(req, context as any);
+}
+
+export async function POST(req: Request, context: { params: Promise<{ path: string[] }> }) {
+    return handleProxy(req, context);
+}
+
+export async function PATCH(req: Request, context: { params: Promise<{ path: string[] }> }) {
+    return handleProxy(req, context);
+}
+
+export async function DELETE(req: Request, context: { params: { path: string[] } }) {
+    return handleProxy(req, context as any);
 }

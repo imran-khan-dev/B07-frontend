@@ -9,9 +9,7 @@ export default async function AllBlogs() {
   const { data } = await res.json();
   console.log("1", data);
 
-  const projects: Project[] = data;
-
-  console.log("project data:", projects);
+  const projects: Project[] = data.data;
 
   return (
     <div className="w-full flex items-center justify-center">

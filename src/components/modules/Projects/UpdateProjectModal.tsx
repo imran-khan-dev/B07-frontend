@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import { toast } from "react-hot-toast";
+import { useState } from "react";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -64,6 +65,8 @@ export function UpdateProjectModal({
   project,
   onUpdated,
 }: UpdateBlogModalProps) {
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,6 +78,7 @@ export function UpdateProjectModal({
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsUpdating(true);
     try {
       const formData = new FormData();
       formData.append("title", data.title);
@@ -84,13 +88,10 @@ export function UpdateProjectModal({
       if (data.repoUrl) formData.append("repoUrl", data.repoUrl);
       formData.append("features", JSON.stringify(data.features));
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/project/update-project/${project.id}`,
-        {
-          method: "PATCH",
-          body: formData,
-        }
-      );
+      const res = await fetch(`/api/proxy/project/update-project/${project.id}`, {
+        method: "PATCH",
+        body: formData,
+      });
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -104,6 +105,8 @@ export function UpdateProjectModal({
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Something went wrong");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -116,7 +119,7 @@ export function UpdateProjectModal({
 
         <Card className="border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-black/40 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300 p-8 rounded-2xl max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-900 dark:text-white text-center">
-            Create a New Project
+            Update Project
           </h2>
 
           <Form {...form}>
@@ -250,9 +253,10 @@ export function UpdateProjectModal({
               <div className="pt-4 text-center">
                 <Button
                   type="submit"
+                  disabled={isUpdating}
                   className="px-8 py-2.5 font-semibold text-sm rounded-md bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 transition-all"
                 >
-                  Save Changes
+                  {isUpdating ? "Updating....." : "Update"}
                 </Button>
               </div>
             </form>
