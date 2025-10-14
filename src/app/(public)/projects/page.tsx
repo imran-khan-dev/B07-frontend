@@ -8,16 +8,17 @@ export const metadata: Metadata = {
 };
 
 const resProject = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API}/project/all-projects`,
-    {
-      next: {
-        revalidate: 30,
-      },
-    }
-  );
+  `${process.env.NEXT_PUBLIC_BASE_API}/project/get-projects`,
+  {
+    next: {
+      revalidate: 30,
+    },
+  }
+);
 
-  const {data: projects} = await resProject.json();
+const { data: projects } = await resProject.json();
 
+console.log("projects:", projects);
 
 const AllProjectsPage = () => {
   return (

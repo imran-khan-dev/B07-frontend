@@ -1,4 +1,4 @@
-import { CreateProjectForm } from "@/components/modules/Projects/Dashboard/CreateProject";
+import { CreateProjectForm } from "@/components/modules/Projects/CreateProject";
 import React from "react";
 
 export default function CreateProject() {

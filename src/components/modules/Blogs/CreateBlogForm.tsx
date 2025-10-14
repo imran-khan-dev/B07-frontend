@@ -76,13 +76,10 @@ export function CreateBlogForm() {
       formData.append("tags", JSON.stringify(data.tags));
       formData.append("authorId", JSON.stringify(1));
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/blog/create-blog`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const res = await fetch("/api/proxy/blog/create-blog", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!res.ok) {
         const errorData = await res.json();
