@@ -38,7 +38,7 @@ export const AboutContent = () => {
             <div className="flex justify-center border border-gray-200 rounded-2xl">
               <div className="aspect-square overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 md:w-7xl sm:w-80 shadow-md">
                 <img
-                  src="https://scontent.fdac41-1.fna.fbcdn.net/v/t39.30808-6/535032831_31069230352724092_4972992897675461759_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEN1QaFPVzmLXkWhZzBKNb8Y8A0IbC85M9jwDQhsLzkz4X7SLHsEd_Sgw-7TS3GycP5iwO1-jnqc_1YLDcRDUQC&_nc_ohc=p88qNSErEoQQ7kNvwGyzfO9&_nc_oc=AdlvtCxhm0ilMvSkoD7ax5jCUb21793mK_UXAko6kan7wFSqZ563DYGhNRzl_YoZq6U&_nc_zt=23&_nc_ht=scontent.fdac41-1.fna&_nc_gid=3A6_M1zGJS1jVkxwasxMBA&oh=00_Afd9gjAtTIrpmlHULTo1R56aeFhnvQVpjb26Vo1ZwNAQnA&oe=68EF0A8B"
+                  src="https://i.imgur.com/960qgFH.jpeg"
                   alt="Profile"
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 />

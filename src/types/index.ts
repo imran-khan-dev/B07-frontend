@@ -73,3 +73,4 @@ export interface ProjectData {
     totalPages: number;
   }
 }
+

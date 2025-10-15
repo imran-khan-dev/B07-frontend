@@ -1,13 +1,55 @@
-/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { BlogPost } from "@/types";
+import { BlogData, BlogPost } from "@/types";
 import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import Loading from "@/components/ui/Loading";
 
-export default function AllBlogs({ blogs }: { blogs: BlogPost[] }) {
+interface AllBlogsProps {
+  data: BlogData;
+}
+
+export default function AllBlogs({ data }: AllBlogsProps) {
+  const [blogs, setBlogs] = useState<BlogPost[]>(data.data);
+  const [pagination, setPagination] = useState(data.pagination);
+  const [loading, setLoading] = useState(false);
+
+  const fetchBlogs = async (page: number) => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `/api/proxy/blog/get-blogs?page=${page}&limit=${pagination.limit}`
+      );
+      const json = await res.json();
+      const updatedData: BlogData = json.data;
+
+      setBlogs(updatedData.data);
+      setPagination(updatedData.pagination);
+    } catch (err) {
+      console.error("Failed to fetch blogs:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (pagination.page < pagination.totalPages) {
+      fetchBlogs(pagination.page + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pagination.page > 1) {
+      fetchBlogs(pagination.page - 1);
+    }
+  };
+
   return (
     <section className="relative overflow-hidden py-18 mx-auto">
-      {/* Background gradient (top ↔ bottom, center soft white/black) */}
+      {/* Background gradient */}
       <div
         className="absolute inset-0 z-0 dark:hidden"
         style={{
@@ -24,6 +66,7 @@ export default function AllBlogs({ blogs }: { blogs: BlogPost[] }) {
       />
 
       <div className="mx-auto container relative z-10 flex flex-col items-center gap-16">
+        {/* Header */}
         <div className="text-center">
           <h2 className="mx-auto mb-6 text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:max-w-3xl">
             All Blogs
@@ -34,17 +77,40 @@ export default function AllBlogs({ blogs }: { blogs: BlogPost[] }) {
           </p>
         </div>
 
-        <div className="grid gap-y-10 sm:grid-cols-12 mx-3 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
-          {blogs.map((post) => (
-            <Card
-              key={post.id}
-              className="order-last border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-black/30 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2 rounded-2xl p-6 sm:p-8"
-            >
-              <div className="grid gap-y-6 sm:grid-cols-10 sm:gap-x-5 md:items-center md:gap-x-8 lg:gap-x-12">
-                {/* Text Section */}
-                <div className="sm:col-span-5 pl-2 md:pl-4 lg:pl-6">
-                  <div className="mb-4 md:mb-6">
-                    <div className="flex flex-wrap gap-3 text-xs tracking-wider text-gray-500 dark:text-gray-400 uppercase md:gap-5 lg:gap-6">
+        {/* Blog Cards */}
+        {loading ? (
+          <Loading />
+        ) : blogs.length > 0 ? (
+          <div className="w-full flex flex-col items-center gap-10 sm:gap-12 md:gap-14 lg:gap-16 px-4 sm:px-6 lg:px-8">
+            {blogs.map((post) => (
+              <Card
+                key={post.id}
+                className="w-full max-w-5xl border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-black/30 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-5 sm:p-7 lg:p-10"
+              >
+                <div className="flex flex-col md:flex-row gap-6 md:gap-10 lg:gap-14 items-start">
+                  {/* Image Section */}
+                  <div className="w-full md:w-1/2">
+                    <a
+                      href={`/blogs/${post.id}`}
+                      target="_blank"
+                      className="block"
+                    >
+                      <div className="aspect-[16/10] overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+                        <img
+                          src={
+                            post.thumbnail ||
+                            "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg"
+                          }
+                          alt={post.title}
+                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      </div>
+                    </a>
+                  </div>
+
+                  {/* Text Section */}
+                  <div className="w-full md:w-1/2">
+                    <div className="mb-3 md:mb-4 flex flex-wrap gap-2 text-xs tracking-wider text-gray-500 dark:text-gray-400 uppercase">
                       {post.tags?.map((tag: string) => (
                         <span
                           key={tag}
@@ -54,63 +120,102 @@ export default function AllBlogs({ blogs }: { blogs: BlogPost[] }) {
                         </span>
                       ))}
                     </div>
-                  </div>
 
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white md:text-2xl lg:text-3xl">
-                    <a
-                      href={`/blogs/${post.id}`}
-                      target="_blank"
-                      className="hover:text-blue-600 dark:hover:text-purple-400 transition-colors"
-                    >
-                      {post.title}
-                    </a>
-                  </h3>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-900 dark:text-white leading-snug">
+                      <a
+                        href={`/blogs/${post.id}`}
+                        target="_blank"
+                        className="hover:text-blue-600 dark:hover:text-purple-400 transition-colors"
+                      >
+                        {post.title}
+                      </a>
+                    </h3>
 
-                  <p className="mt-4 text-gray-600 dark:text-gray-300 md:mt-5">
-                    {post.summary}
-                  </p>
+                    <p className="mt-3 text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed line-clamp-3">
+                      {post.summary}
+                    </p>
 
-                  <div className="mt-6 flex items-center space-x-4 text-sm md:mt-8 text-gray-500 dark:text-gray-400">
-                    <span>{post.author.name}</span>
-                    <span>•</span>
-                    <span>{format(new Date(post.createdAt), "PPP")}</span>
-                  </div>
-
-                  <div className="mt-6 flex items-center space-x-2 md:mt-8">
-                    <a
-                      href={`/blogs/${post.id}`}
-                      target="_blank"
-                      className="inline-flex items-center font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:underline md:text-base"
-                    >
-                      <span>Read more</span>
-                      <ArrowRight className="ml-2 size-4 text-blue-600 dark:text-purple-400 transition-transform group-hover:translate-x-1" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Image Section */}
-                <div className="order-first sm:order-last sm:col-span-5">
-                  <a
-                    href={`/blogs/${post.id}`}
-                    target="_blank"
-                    className="block"
-                  >
-                    <div className="aspect-16/9 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
-                      <img
-                        src={
-                          post.thumbnail ||
-                          "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg"
-                        }
-                        alt={post.title}
-                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
+                    <div className="mt-4 flex items-center space-x-3 text-xs sm:text-sm lg:text-base text-gray-500 dark:text-gray-400">
+                      <span>{post.author.name}</span>
+                      <span>•</span>
+                      <span>{format(new Date(post.createdAt), "PPP")}</span>
                     </div>
-                  </a>
+
+                    <div className="mt-5">
+                      <a
+                        href={`/blogs/${post.id}`}
+                        target="_blank"
+                        className="inline-flex items-center font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:underline text-sm sm:text-base lg:text-lg"
+                      >
+                        <span>Read more</span>
+                        <ArrowRight className="ml-2 size-4 text-blue-600 dark:text-purple-400 transition-transform group-hover:translate-x-1" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-600 dark:text-gray-400 text-center">
+            No blogs available.
+          </p>
+        )}
+
+        {/* Pagination Controls */}
+        {pagination.totalPages > 1 && (
+          <div className="flex justify-center mt-10">
+            <div className="flex items-center gap-2 sm:gap-3 bg-white/80 dark:bg-black/40 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-full shadow-md px-3 sm:px-5 py-2">
+              {/* Prev */}
+              <button
+                onClick={handlePrevPage}
+                disabled={pagination.page === 1}
+                className={`px-3 py-1.5 rounded-full text-sm sm:text-base font-medium transition-all ${
+                  pagination.page === 1
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-blue-600 dark:text-purple-400 hover:bg-blue-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-black"
+                }`}
+              >
+                Prev
+              </button>
+
+              {/* Page Numbers */}
+              <div className="flex items-center gap-1 sm:gap-2">
+                {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
+                  .slice(
+                    Math.max(0, pagination.page - 3),
+                    Math.min(pagination.totalPages, pagination.page + 2)
+                  )
+                  .map((pageNum) => (
+                    <button
+                      key={pageNum}
+                      onClick={() => fetchBlogs(pageNum)}
+                      className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full text-sm font-semibold transition-all ${
+                        pageNum === pagination.page
+                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-black"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  ))}
               </div>
-            </Card>
-          ))}
-        </div>
+
+              {/* Next */}
+              <button
+                onClick={handleNextPage}
+                disabled={pagination.page === pagination.totalPages}
+                className={`px-3 py-1.5 rounded-full text-sm sm:text-base font-medium transition-all ${
+                  pagination.page === pagination.totalPages
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-blue-600 dark:text-purple-400 hover:bg-blue-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-black"
+                }`}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

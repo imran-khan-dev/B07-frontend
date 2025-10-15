@@ -1,5 +1,5 @@
 import { AllBlogs } from "@/components/modules/Blogs/AllBlogs";
-import { BlogPost } from "@/types";
+import { BlogData } from "@/types";
 
 export const metadata = {
   title: "All Blogs | Imran Khan",
@@ -8,19 +8,14 @@ export const metadata = {
 };
 
 const AllBlogsPage = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`,
-    {
-      next: {
-        revalidate: 30,
-      },
-    }
-  );
-  const { data } = await res.json();
-  const blogs: BlogPost[] = data.data;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`);
+  const json = await res.json();
+
+  const blogs: BlogData = json.data;
+
   return (
     <div>
-      <AllBlogs blogs={blogs} />
+      <AllBlogs data={blogs} />
     </div>
   );
 };
