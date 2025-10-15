@@ -14,19 +14,43 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2, Edit2 } from "lucide-react";
 import { UpdateBlogModal } from "../UpdateBlogModal";
-import { BlogPost } from "@/types";
+import { BlogData, BlogPost } from "@/types";
 import { toast } from "react-hot-toast";
 
 interface DashboardBlogsProps {
-  allblogs: BlogPost[];
+  data: BlogData;
 }
 
-export default function DashboardBlogs({ allblogs }: DashboardBlogsProps) {
-  const [blogs, setBlogs] = useState<BlogPost[]>(allblogs);
+export default function DashboardBlogs({ data }: DashboardBlogsProps) {
+  const [blogs, setBlogs] = useState<BlogPost[]>(data.data);
+  const [pagination, setPagination] = useState(data.pagination);
   const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
   const [deleteBlogId, setDeleteBlogId] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch blogs by page
+  const fetchBlogs = async (page: number) => {
+    console.log("page", page);
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `/api/proxy/blog/get-blogs?page=${page}&limit=${pagination.limit}`
+      );
+      const json = await res.json();
+      console.log("json new", json);
+      const updatedData: BlogData = json.data;
+      console.log("page new", updatedData);
+
+      setBlogs(updatedData.data);
+      setPagination(updatedData.pagination);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to load blogs");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async () => {
     if (!deleteBlogId) return;
@@ -45,8 +69,20 @@ export default function DashboardBlogs({ allblogs }: DashboardBlogsProps) {
       toast.success("Blog deleted successfully");
     } catch (err: any) {
       toast.error(err.message || "Something went wrong");
-
       setBlogs(originalBlogs);
+    }
+  };
+
+  // Pagination handlers
+  const handleNextPage = () => {
+    if (pagination.page < pagination.totalPages) {
+      fetchBlogs(pagination.page + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pagination.page > 1) {
+      fetchBlogs(pagination.page - 1);
     }
   };
 
@@ -58,7 +94,11 @@ export default function DashboardBlogs({ allblogs }: DashboardBlogsProps) {
 
       {/* Blog List */}
       <div className="space-y-4">
-        {blogs.length > 0 ? (
+        {loading ? (
+          <p className="text-gray-500 dark:text-gray-400 text-center">
+            Loading blogs...
+          </p>
+        ) : blogs.length > 0 ? (
           blogs.map((blog) => (
             <Card
               key={blog.id}
@@ -134,6 +174,31 @@ export default function DashboardBlogs({ allblogs }: DashboardBlogsProps) {
           </p>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {pagination.totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4 mt-8">
+          <Button
+            variant="outline"
+            disabled={pagination.page === 1}
+            onClick={handlePrevPage}
+          >
+            Previous
+          </Button>
+
+          <span className="text-gray-700 dark:text-gray-300">
+            Page {pagination.page} of {pagination.totalPages}
+          </span>
+
+          <Button
+            variant="outline"
+            disabled={pagination.page === pagination.totalPages}
+            onClick={handleNextPage}
+          >
+            Next
+          </Button>
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>

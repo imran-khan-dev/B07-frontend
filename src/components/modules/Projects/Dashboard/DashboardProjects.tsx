@@ -14,21 +14,43 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2, Edit2 } from "lucide-react";
 import { UpdateProjectModal } from "../UpdateProjectModal";
-import { Project } from "@/types";
+import { Project, ProjectData } from "@/types";
 import { toast } from "react-hot-toast";
 
 interface DashboardProjectsProps {
-  allprojects: Project[];
+  data: ProjectData;
 }
 
-export default function DashboardProjects({
-  allprojects,
-}: DashboardProjectsProps) {
-  const [projects, setProjects] = useState<Project[]>(allprojects);
+export default function DashboardProjects({ data }: DashboardProjectsProps) {
+  const [projects, setProjects] = useState<Project[]>(data.data);
+  const [pagination, setPagination] = useState(data.pagination);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [deleteProjectId, setDeleteProjectId] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch projects by page
+  const fetchProjects = async (page: number) => {
+    console.log("page", page);
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `/api/proxy/project/get-projects?page=${page}&limit=${pagination.limit}`
+      );
+      const json = await res.json();
+      console.log("json new", json);
+      const updatedData: ProjectData = json.data;
+      console.log("page new", updatedData);
+
+      setProjects(updatedData.data);
+      setPagination(updatedData.pagination);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to load blogs");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async () => {
     if (!deleteProjectId) return;
@@ -51,6 +73,19 @@ export default function DashboardProjects({
     }
   };
 
+  // Pagination handlers
+  const handleNextPage = () => {
+    if (pagination.page < pagination.totalPages) {
+      fetchProjects(pagination.page + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pagination.page > 1) {
+      fetchProjects(pagination.page - 1);
+    }
+  };
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
@@ -59,7 +94,11 @@ export default function DashboardProjects({
 
       {/* Project List */}
       <div className="space-y-4">
-        {Array.isArray(projects) && projects.length > 0 ? (
+        {loading ? (
+          <p className="text-gray-500 dark:text-gray-400 text-center">
+            Loading projects...
+          </p>
+        ) : Array.isArray(projects) && projects.length > 0 ? (
           projects.map((project) => (
             <Card
               key={project.id}
@@ -96,7 +135,6 @@ export default function DashboardProjects({
                     ? project.owner.name
                     : project.owner || "Unknown"}{" "}
                   • {new Date(project.createdAt).toLocaleDateString()}
-                  {/* {project.views ?? 0} views */}
                 </p>
               </div>
 
@@ -133,6 +171,31 @@ export default function DashboardProjects({
           </p>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {pagination.totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4 mt-8">
+          <Button
+            variant="outline"
+            disabled={pagination.page === 1}
+            onClick={handlePrevPage}
+          >
+            Previous
+          </Button>
+
+          <span className="text-gray-700 dark:text-gray-300">
+            Page {pagination.page} of {pagination.totalPages}
+          </span>
+
+          <Button
+            variant="outline"
+            disabled={pagination.page === pagination.totalPages}
+            onClick={handleNextPage}
+          >
+            Next
+          </Button>
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>

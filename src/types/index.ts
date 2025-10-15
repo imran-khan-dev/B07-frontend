@@ -51,3 +51,25 @@ export interface Project {
 export interface ProjectsProps {
   projects: Project[];
 }
+
+
+export interface BlogData {
+  data: BlogPost[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+
+export interface ProjectData {
+  data: Project[]
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  }
+}

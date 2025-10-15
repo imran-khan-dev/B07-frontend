@@ -5,7 +5,8 @@ import { cookies } from "next/headers";
 async function handleProxy(req: Request, context: { params: Promise<{ path: string[] }> }) {
     const { params } = await context;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
-    const url = `${baseUrl}/${(await params).path.join("/")}`;
+    const { search } = new URL(req.url);
+    const url = `${baseUrl}/${(await params).path.join("/")}${search}`;
 
     const accessToken = (await cookies()).get("accessToken")?.value;
 
