@@ -95,8 +95,8 @@ export default function DashboardProjects({
                   {typeof project.owner === "object"
                     ? project.owner.name
                     : project.owner || "Unknown"}{" "}
-                  • {new Date(project.createdAt).toLocaleDateString()} •{" "}
-                  {project.views ?? 0} views
+                  • {new Date(project.createdAt).toLocaleDateString()}
+                  {/* {project.views ?? 0} views */}
                 </p>
               </div>
 

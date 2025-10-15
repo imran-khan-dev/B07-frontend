@@ -1,12 +1,17 @@
 import { cookies } from "next/headers";
 
 export async function getCurrentUser() {
-  const token = (await cookies()).get("token")?.value;
-  if (!token) return null;
 
-  const res = await fetch("http://localhost:5000/api/users/me", {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
+
+  const accessToken = (await cookies()).get("accessToken")?.value;
+
+
+  if (!accessToken) return null;
+
+  const res = await fetch(`${baseUrl}/user/1`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${accessToken}`,
     },
     cache: "no-store",
   });

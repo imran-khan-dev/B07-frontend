@@ -9,12 +9,8 @@ async function handleProxy(req: Request, context: { params: Promise<{ path: stri
 
     const accessToken = (await cookies()).get("accessToken")?.value;
 
-    console.log("here is AT", accessToken)
-
     const headers = new Headers(req.headers);
     if (accessToken) headers.set("Authorization", accessToken);
-
-    console.log(headers)
 
     const method = req.method.toUpperCase();
     const fetchOptions: any = { method, headers };

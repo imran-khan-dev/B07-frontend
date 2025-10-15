@@ -1,20 +1,9 @@
-import { getCurrentUser } from "@/lib/getCurrentUser";
+import DashboardHomeStats from "@/components/modules/Dashboard/DashboardStats";
 
-const DashboardHomePage = async () => {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    return <div>Please login first.</div>;
-  }
-
+export default function DashboardHome() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Welcome, {user.name}!</h1>
-      <p>Email: {user.email}</p>
-
-      <div className="mt-4">{/* <LogoutButton /> */}</div>
+    <div className="w-full flex items-center justify-center">
+      <DashboardHomeStats />
     </div>
   );
-};
-
-export default DashboardHomePage;
+}
