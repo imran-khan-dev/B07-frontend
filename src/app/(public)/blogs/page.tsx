@@ -7,6 +7,8 @@ export const metadata = {
     "Discover the latest insights and tutorials about modern web development, UI design, and component-driven architecture.",
 };
 
+export const revalidate = 30;
+
 const AllBlogsPage = async () => {
   let blogs: BlogData = {
     data: [],
@@ -17,11 +19,10 @@ const AllBlogsPage = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`,
       {
-        cache: "no-store",
+        next: { revalidate: 30 },
       }
     );
     const json = await res.json();
-
     blogs = {
       data: json?.data?.data || [],
       pagination: json?.data?.pagination || {
@@ -35,11 +36,7 @@ const AllBlogsPage = async () => {
     console.error("Failed to fetch blogs:", err);
   }
 
-  return (
-    <div>
-      <AllBlogs data={blogs} />
-    </div>
-  );
+  return <AllBlogs data={blogs} />;
 };
 
 export default AllBlogsPage;

@@ -8,8 +8,7 @@ export const metadata: Metadata = {
     "Explore my latest web development projects built with modern technologies like React, Next.js, TypeScript, and Tailwind CSS.",
 };
 
-// Force dynamic rendering to fetch API at request time
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function AllProjectsPage() {
   let projects: ProjectData = {
@@ -24,7 +23,10 @@ export default async function AllProjectsPage() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/project/get-projects`
+      `${process.env.NEXT_PUBLIC_BASE_API}/project/get-projects`,
+      {
+        next: { revalidate: 30 },
+      }
     );
 
     if (!res.ok) throw new Error("Failed to fetch projects");
@@ -34,6 +36,7 @@ export default async function AllProjectsPage() {
   } catch (err) {
     console.error("Error fetching projects:", err);
   }
+
 
   return (
     <div>
