@@ -1,6 +1,9 @@
 import { BlogPost } from "@/types";
 import Image from "next/image";
 import { format } from "date-fns";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 export default function BlogDetailsCard({ blog }: { blog: BlogPost | null }) {
   if (!blog) {
@@ -83,7 +86,6 @@ export default function BlogDetailsCard({ blog }: { blog: BlogPost | null }) {
             </div>
           )}
 
-          {/* Summary */}
           {blog.summary && (
             <div className="mb-8 p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-900/50 shadow-md transition-all duration-300">
               <p className="text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
@@ -92,9 +94,13 @@ export default function BlogDetailsCard({ blog }: { blog: BlogPost | null }) {
             </div>
           )}
 
-          {/* Content */}
           <article className="prose dark:prose-invert prose-lg max-w-none leading-relaxed">
-            <p>{blog.content}</p>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {blog.content}
+            </ReactMarkdown>
           </article>
         </div>
       </div>
