@@ -1,13 +1,13 @@
+export const dynamic = "force-dynamic";
+
 import DashboardProjects from "@/components/modules/Projects/Dashboard/DashboardProjects";
 import { ProjectData } from "@/types";
 import { Metadata } from "next";
 import React from "react";
 
-
-export const metadata:Metadata = {
+export const metadata: Metadata = {
   title: "All Projects | Imran Khan",
-  description:
-    "All Projects management of Imran Khan's portfolio",
+  description: "All Projects management of Imran Khan's portfolio",
 };
 
 export default async function AllProjects() {
