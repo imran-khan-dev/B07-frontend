@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-export async function getCurrentUser() {
+export async function getUser() {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
 

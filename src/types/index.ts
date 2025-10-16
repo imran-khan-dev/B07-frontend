@@ -1,3 +1,4 @@
+import { ComponentType } from "react";
 
 export interface Author {
   id: number;
@@ -74,3 +75,11 @@ export interface ProjectData {
   }
 }
 
+export interface ISidebarItem {
+  title: string;
+  items: {
+    title: string;
+    url: string;
+    component: ComponentType;
+  }[];
+}

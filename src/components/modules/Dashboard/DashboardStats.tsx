@@ -1,9 +1,9 @@
-import { getCurrentUser } from "@/lib/getCurrentUser";
+import { getUser } from "@/lib/getUser";
 import { getDashboardStats } from "@/lib/getDashboardStats";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function DashboardHomeStats() {
-  const userRes = await getCurrentUser();
+  const userRes = await getUser();
   const user = userRes?.data;
 
   if (!user) {
