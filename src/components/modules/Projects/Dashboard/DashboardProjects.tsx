@@ -93,7 +93,7 @@ export default function DashboardProjects({ data }: DashboardProjectsProps) {
       {/* Project List */}
       <div className="space-y-4">
         {loading ? (
-         <Loading/>
+          <Loading />
         ) : Array.isArray(projects) && projects.length > 0 ? (
           projects.map((project) => (
             <Card
@@ -195,7 +195,7 @@ export default function DashboardProjects({ data }: DashboardProjectsProps) {
 
       {/* Delete Confirmation Modal */}
       <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-        <DialogContent className="max-w-sm">
+        <DialogContent className="w-[90%] max-w-sm sm:max-w-md rounded-lg p-6">
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
             <DialogDescription>
@@ -203,7 +203,7 @@ export default function DashboardProjects({ data }: DashboardProjectsProps) {
               be undone.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="flex justify-end gap-2">
             <Button
               variant="outline"
               onClick={() => setIsDeleteModalOpen(false)}

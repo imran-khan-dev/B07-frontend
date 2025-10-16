@@ -8,12 +8,12 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { data } = await getUser();
+  const userData = (await getUser()) || {};
 
   const user = {
-    name: data?.name || "Admin",
-    email: data?.email || "Admin Email",
-    avatar: data?.picture || "/avatars/shadcn.jpg",
+    name: userData?.data?.name || "Admin",
+    email: userData?.data?.email || "Admin Email",
+    avatar: userData?.data?.picture || "/avatars/shadcn.jpg",
   };
 
   return (

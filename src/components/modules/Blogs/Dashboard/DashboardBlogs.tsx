@@ -92,7 +92,7 @@ export default function DashboardBlogs({ data }: DashboardBlogsProps) {
       {/* Blog List */}
       <div className="space-y-4">
         {loading ? (
-          <Loading/>
+          <Loading />
         ) : blogs.length > 0 ? (
           blogs.map((blog) => (
             <Card
@@ -197,7 +197,7 @@ export default function DashboardBlogs({ data }: DashboardBlogsProps) {
 
       {/* Delete Confirmation Modal */}
       <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-        <DialogContent className="max-w-sm">
+        <DialogContent className="w-[90%] max-w-sm sm:max-w-md rounded-lg">
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
             <DialogDescription>
