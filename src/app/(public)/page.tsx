@@ -19,7 +19,7 @@ export default async function HomePage() {
     }
   );
   const { data } = await resBlog.json();
-  const blogs: BlogPost[] = data.data;
+  const blogs: BlogPost[] = data?.data;
 
   const resProject = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API}/project/all-projects`,
