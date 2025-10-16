@@ -16,6 +16,7 @@ import { Trash2, Edit2 } from "lucide-react";
 import { UpdateProjectModal } from "../UpdateProjectModal";
 import { Project, ProjectData } from "@/types";
 import { toast } from "react-hot-toast";
+import Loading from "@/components/ui/Loading";
 
 interface DashboardProjectsProps {
   data: ProjectData;
@@ -92,9 +93,7 @@ export default function DashboardProjects({ data }: DashboardProjectsProps) {
       {/* Project List */}
       <div className="space-y-4">
         {loading ? (
-          <p className="text-gray-500 dark:text-gray-400 text-center">
-            Loading projects...
-          </p>
+         <Loading/>
         ) : Array.isArray(projects) && projects.length > 0 ? (
           projects.map((project) => (
             <Card

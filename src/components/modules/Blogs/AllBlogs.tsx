@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { BlogData, BlogPost } from "@/types";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
 import Loading from "@/components/ui/Loading";
 
 interface AllBlogsProps {

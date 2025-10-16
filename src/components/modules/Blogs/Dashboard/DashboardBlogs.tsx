@@ -16,6 +16,7 @@ import { Trash2, Edit2 } from "lucide-react";
 import { UpdateBlogModal } from "../UpdateBlogModal";
 import { BlogData, BlogPost } from "@/types";
 import { toast } from "react-hot-toast";
+import Loading from "@/components/ui/Loading";
 
 interface DashboardBlogsProps {
   data: BlogData;
@@ -91,9 +92,7 @@ export default function DashboardBlogs({ data }: DashboardBlogsProps) {
       {/* Blog List */}
       <div className="space-y-4">
         {loading ? (
-          <p className="text-gray-500 dark:text-gray-400 text-center">
-            Loading blogs...
-          </p>
+          <Loading/>
         ) : blogs.length > 0 ? (
           blogs.map((blog) => (
             <Card
