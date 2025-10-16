@@ -15,14 +15,21 @@ const AllBlogsPage = async () => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`
+      `${process.env.NEXT_PUBLIC_BASE_API}/blog/get-blogs`,
+      {
+        cache: "no-store",
+      }
     );
     const json = await res.json();
 
-    // Ensure the structure matches BlogData
     blogs = {
       data: json?.data?.data || [],
-      pagination: json?.data?.pagination || { page: 1, total: 0 },
+      pagination: json?.data?.pagination || {
+        page: 1,
+        limit: 0,
+        total: 0,
+        totalPages: 0,
+      },
     };
   } catch (err) {
     console.error("Failed to fetch blogs:", err);
