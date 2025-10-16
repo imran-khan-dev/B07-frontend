@@ -8,19 +8,36 @@ export const metadata: Metadata = {
     "Explore my latest web development projects built with modern technologies like React, Next.js, TypeScript, and Tailwind CSS.",
 };
 
-const res = await fetch(
-  `${process.env.NEXT_PUBLIC_BASE_API}/project/get-projects`
-);
-const json = await res.json();
+// Force dynamic rendering to fetch API at request time
+export const dynamic = "force-dynamic";
 
-const projects: ProjectData = json.data;
+export default async function AllProjectsPage() {
+  let projects: ProjectData = {
+    data: [],
+    pagination: {
+      page: 1,
+      limit: 0,
+      total: 0,
+      totalPages: 0,
+    },
+  };
 
-const AllProjectsPage = () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/project/get-projects`
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch projects");
+
+    const json = await res.json();
+    projects = json.data || projects;
+  } catch (err) {
+    console.error("Error fetching projects:", err);
+  }
+
   return (
-    <div>
+    <div className="w-full flex items-center justify-center">
       <AllProjects data={projects} />
     </div>
   );
-};
-
-export default AllProjectsPage;
+}

@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import DashboardProjects from "@/components/modules/Projects/Dashboard/DashboardProjects";
 import { ProjectData } from "@/types";
 import { Metadata } from "next";
