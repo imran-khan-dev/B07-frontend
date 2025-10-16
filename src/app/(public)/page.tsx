@@ -19,7 +19,7 @@ export default async function HomePage() {
     }
   );
   const jsonBlog = await resBlog.json();
-  const blogs: BlogPost[] = jsonBlog?.data?.data;
+  const blogs: BlogPost[] = jsonBlog?.data?.data || [];
 
   const resProject = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API}/project/all-projects`,
@@ -32,7 +32,7 @@ export default async function HomePage() {
 
   const jsonProject = await resProject.json();
 
-  const projects: Project[] = jsonProject?.data;
+  const projects: Project[] = jsonProject?.data || [];
 
   return (
     <>
