@@ -122,12 +122,18 @@ const AllProjects = ({ data }: ProjectsProps) => {
                         {project.description}
                       </p>
 
-                      {project.features && (
-                        <ul className="mt-4 space-y-2 text-gray-700 dark:text-gray-400 list-disc pl-5 text-sm sm:text-base">
-                          {project.features.map((feature, idx) => (
-                            <li key={idx}>{feature}</li>
+                      {/* Features (tags) */}
+                      {project.features.length > 0 && (
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {project.features.map((feature) => (
+                            <span
+                              key={feature}
+                              className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 text-blue-600 dark:text-purple-400 border border-blue-500/20 dark:border-purple-400/20"
+                            >
+                              {feature}
+                            </span>
                           ))}
-                        </ul>
+                        </div>
                       )}
 
                       <div className="mt-4 text-gray-500 dark:text-gray-400 text-sm sm:text-base">
