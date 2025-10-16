@@ -1,60 +1,59 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-async function handleProxy(req: Request, context: { params: Promise<{ path: string[] }> }) {
-    const { params } = await context;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
-    const { search } = new URL(req.url);
-    const url = `${baseUrl}/${(await params).path.join("/")}${search}`;
+async function handleProxy(req: NextRequest, params: string[]) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
+  const { search } = new URL(req.url);
+  const url = `${baseUrl}/${params.join("/")}${search}`;
 
-    const accessToken = (await cookies()).get("accessToken")?.value;
+  const accessToken = (await cookies()).get("accessToken")?.value;
 
-    const headers = new Headers(req.headers);
-    if (accessToken) headers.set("Authorization", accessToken);
+  const headers = new Headers(req.headers);
+  if (accessToken) headers.set("Authorization", accessToken);
 
-    const method = req.method.toUpperCase();
-    const fetchOptions: any = { method, headers };
+  const method = req.method.toUpperCase();
+  const fetchOptions: any = { method, headers };
 
-    // Just POST and PATCH need a body
-    if (["POST", "PATCH"].includes(method)) {
-        const contentType = req.headers.get("content-type") || "";
-        if (contentType.includes("application/json")) {
-            const json = await req.json();
-            fetchOptions.body = JSON.stringify(json);
-            headers.set("Content-Type", "application/json");
-        } else {
-            // FormData as raw stream forward to backend
-            fetchOptions.body = req.body;
-            fetchOptions.duplex = "half";
-        }
+  // Only POST and PATCH need a body
+  if (["POST", "PATCH"].includes(method)) {
+    const contentType = req.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      const json = await req.json();
+      fetchOptions.body = JSON.stringify(json);
+      headers.set("Content-Type", "application/json");
+    } else {
+      // FormData or raw stream
+      fetchOptions.body = req.body;
+      fetchOptions.duplex = "half";
     }
+  }
 
-    const res = await fetch(url, fetchOptions);
+  const res = await fetch(url, fetchOptions);
 
-    let data;
-    try {
-        data = await res.json();
-    } catch {
-        data = null;
-    }
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = null;
+  }
 
-    return NextResponse.json(data, { status: res.status });
+  return NextResponse.json(data, { status: res.status });
 }
 
-
-export async function GET(req: Request, context: { params: { path: string[] } }) {
-    return handleProxy(req, context as any);
+// Now all HTTP methods have consistent types
+export async function GET(req: NextRequest, { params }: { params: { path: string[] } }) {
+  return handleProxy(req, params.path);
 }
 
-export async function POST(req: Request, context: { params: Promise<{ path: string[] }> }) {
-    return handleProxy(req, context);
+export async function POST(req: NextRequest, { params }: { params: { path: string[] } }) {
+  return handleProxy(req, params.path);
 }
 
-export async function PATCH(req: Request, context: { params: Promise<{ path: string[] }> }) {
-    return handleProxy(req, context);
+export async function PATCH(req: NextRequest, { params }: { params: { path: string[] } }) {
+  return handleProxy(req, params.path);
 }
 
-export async function DELETE(req: Request, context: { params: { path: string[] } }) {
-    return handleProxy(req, context as any);
+export async function DELETE(req: NextRequest, { params }: { params: { path: string[] } }) {
+  return handleProxy(req, params.path);
 }
