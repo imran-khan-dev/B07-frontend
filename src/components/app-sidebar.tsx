@@ -24,11 +24,6 @@ import {
 import Link from "next/link";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -58,7 +53,7 @@ const data = {
   ],
 };
 
-export async function AppSidebar({
+export function AppSidebar({
   user,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {

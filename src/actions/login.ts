@@ -13,7 +13,6 @@ export async function login(formData: { email: string; password: string }) {
     if (!res.ok) return { success: false };
 
     const data = await res.json();
-    console.log("data", data);
 
     const { accessToken, refreshToken } = data.data || {};
 
@@ -37,8 +36,6 @@ export async function login(formData: { email: string; password: string }) {
         path: "/",
         sameSite: "lax",
     });
-
-    console.log("cookie store", cookieStore);
 
     return { success: true };
 }

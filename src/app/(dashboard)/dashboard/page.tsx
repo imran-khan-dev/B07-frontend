@@ -1,16 +1,16 @@
-// import DashboardHomeStats from "@/components/modules/Dashboard/DashboardStats";
-
-// export default function DashboardHome() {
-//   return (
-//     <div className="w-full flex items-center justify-center">
-//       <DashboardHomeStats />
-//     </div>
-//   );
-// }
-
 import { SectionCards } from "@/components/section-cards";
+import { Metadata } from "next";
+
+export const metadata:Metadata = {
+  title: "Dashboard | Imran Khan",
+  description:
+    "Dashbaord of Imran Khan's portfolio",
+};
 
 export default function DashboardHome() {
+
+  
+
   return (
     <div>
       <SectionCards />

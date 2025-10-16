@@ -1,6 +1,8 @@
 import BlogDetailsCard from "@/components/modules/Blogs/BlogDetailsCard";
 import { BlogPost } from "@/types";
 
+
+
 export const generateStaticParams = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blogs`, {
     next: { revalidate: 60 },

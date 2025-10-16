@@ -32,17 +32,13 @@ export default function DashboardBlogs({ data }: DashboardBlogsProps) {
 
   // Fetch blogs by page
   const fetchBlogs = async (page: number) => {
-    console.log("page", page);
     try {
       setLoading(true);
       const res = await fetch(
         `/api/proxy/blog/get-blogs?page=${page}&limit=${pagination.limit}`
       );
       const json = await res.json();
-      console.log("json new", json);
       const updatedData: BlogData = json.data;
-      console.log("page new", updatedData);
-
       setBlogs(updatedData.data);
       setPagination(updatedData.pagination);
     } catch (err: any) {

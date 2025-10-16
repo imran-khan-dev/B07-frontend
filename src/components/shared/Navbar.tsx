@@ -76,7 +76,7 @@ const Navbar = () => {
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <Link
-              href="resume"
+              href="/resume"
               className="flex items-center space-x-1.5 lg:space-x-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:shadow-md"
             >
               <span>Resume</span>
@@ -123,13 +123,13 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="pt-4 mt-2 border-t border-gray-200 dark:border-gray-700 flex flex-col space-y-2">
-                <a
-                  href="#"
+                <Link
+                  href="/resume"
                   className="flex items-center justify-center space-x-2 px-3 py-2.5 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <span>Resume</span>
                   <ExternalLink className="h-4 w-4" />
-                </a>
+                </Link>
                 <Link
                   href={"/contact"}
                   className="cursor-pointer px-3 py-2.5 text-sm font-medium bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"

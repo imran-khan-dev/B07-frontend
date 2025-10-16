@@ -32,16 +32,13 @@ export default function DashboardProjects({ data }: DashboardProjectsProps) {
 
   // Fetch projects by page
   const fetchProjects = async (page: number) => {
-    console.log("page", page);
     try {
       setLoading(true);
       const res = await fetch(
         `/api/proxy/project/get-projects?page=${page}&limit=${pagination.limit}`
       );
       const json = await res.json();
-      console.log("json new", json);
       const updatedData: ProjectData = json.data;
-      console.log("page new", updatedData);
 
       setProjects(updatedData.data);
       setPagination(updatedData.pagination);

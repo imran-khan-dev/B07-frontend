@@ -10,8 +10,6 @@ export default async function DashboardLayout({
 }) {
   const { data } = await getUser();
 
-  console.log(data);
-
   const user = {
     name: data?.name || "Admin",
     email: data?.email || "Admin Email",
