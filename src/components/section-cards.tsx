@@ -12,10 +12,14 @@ export async function SectionCards() {
   const blogStats = stats?.blogStats?.data;
   const projectStats = stats?.projectStats?.data;
 
+  // Softer gradient with dark text for contrast
+  const cardClasses =
+    "bg-gradient-to-r from-blue-100 to-purple-100 text-gray-900 shadow-sm rounded-md p-4 transition-all duration-200 ease-linear hover:from-blue-200 hover:to-purple-200 hover:shadow-md active:opacity-95";
+
   return (
     <div className="@container/main flex flex-1 flex-col gap-2">
-      <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-        <Card className="@container/card">
+      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+        <Card className={`${cardClasses} @container/card`}>
           <CardHeader>
             <CardDescription>Total Projects</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
@@ -23,7 +27,8 @@ export async function SectionCards() {
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="@container/card">
+
+        <Card className={`${cardClasses} @container/card`}>
           <CardHeader>
             <CardDescription>Total Blog</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
@@ -31,7 +36,8 @@ export async function SectionCards() {
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="@container/card">
+
+        <Card className={`${cardClasses} @container/card`}>
           <CardHeader>
             <CardDescription>Total Blog Views</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
@@ -39,7 +45,8 @@ export async function SectionCards() {
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="@container/card">
+
+        <Card className={`${cardClasses} @container/card`}>
           <CardHeader>
             <CardDescription>Average Blog Views</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
