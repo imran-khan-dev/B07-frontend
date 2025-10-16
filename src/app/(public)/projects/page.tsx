@@ -36,7 +36,7 @@ export default async function AllProjectsPage() {
   }
 
   return (
-    <div className="w-full flex items-center justify-center">
+    <div>
       <AllProjects data={projects} />
     </div>
   );
