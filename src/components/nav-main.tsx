@@ -25,21 +25,10 @@ export function NavMain({
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
-            <SidebarMenuButton
-              tooltip="Quick Create"
-              className="
-    min-w-8 px-4 py-2 flex items-center gap-2 rounded-md
-    bg-gradient-to-r from-blue-600 to-purple-600
-    text-white
-    hover:from-blue-600 hover:to-purple-600
-    active:from-blue-700 active:to-purple-700
-    shadow-md
-    transition-all duration-200 ease-linear
-  "
-            >
+            {/* <SidebarMenuButton>
               <IconCirclePlusFilled />
               <span className="font-semibold text-sm">Quick Create</span>
-            </SidebarMenuButton>
+            </SidebarMenuButton> */}
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
